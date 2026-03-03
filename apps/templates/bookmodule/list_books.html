@@ -1,0 +1,15 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %} List Books {% endblock title %}
+
+{% block content %}
+<h1>List of Books</h1>
+
+<p>This is the list books page.</p>
+
+<img src="{% static 'book1.jpg' %}" alt="book1" width="200">
+<img src="{% static 'book2.jpg' %}" alt="book2" width="200">
+<img src="{% static 'book3.jpg' %}" alt="book3" width="200">
+
+{% endblock content %}
