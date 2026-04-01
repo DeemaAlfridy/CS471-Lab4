@@ -1,0 +1,58 @@
+.links-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* FIRST BAR */
+.link1 {
+    display: block;
+    padding: 15px;
+    background-color: #a8d5a2;   /* light green */
+    color: red;
+    text-decoration: none;
+}
+
+/* SECOND BAR */
+.link2 {
+    display: block;
+    padding: 15px;
+    background-color: #555555;   /* dark gray */
+    color: yellow;
+    text-decoration: none;
+}
+
+/* THIRD BAR */
+.link3 {
+    display: block;
+    padding: 15px;
+    background-color: black;
+    color: white;
+    text-decoration: none;
+}
+
+/* HOVER EFFECT (simple darken) */
+.link1:hover { opacity: 0.8; }
+.link2:hover { opacity: 0.8; }
+.link3:hover { opacity: 0.8; }
+
+/* ACTIVE */
+.link1:active { color: black; }
+.link2:active { color: white; }
+.link3:active { color: yellow; }
+
+/* VISITED */
+.link1:visited { color: darkred; }
+.link2:visited { color: gold; }
+.link3:visited { color: lightgray; }
+
+.format-title {
+    background-color: #d9e8c4;   
+    color: green;
+    padding: 10px;
+}
+
+.list-title {
+    background-color: #6ea3a3;  
+    color: white;
+    padding: 10px;
+}

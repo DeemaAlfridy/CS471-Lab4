@@ -10,9 +10,11 @@
   <meta charset="UTF-8">
 
   <link rel="stylesheet" href="{% static 'styles.css' %}">
+
+  {% block stylesheets %}{% endblock %}   <!-- 🔥 ADD THIS -->
 </head>
 <body>
-  {%include "includes/header.html"%}
+  {% include "includes/header.html"%}
   {% block content %}
   {% endblock content %}
 
