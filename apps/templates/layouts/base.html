@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 {% load static %}
 <head>
   <title>{% block title %}{% endblock title %}</title>
@@ -8,13 +8,17 @@
   <meta name="author" content="author name">
   <link rel="icon" href="{% static 'qu-icon.png' %}">
   <meta charset="UTF-8">
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="{% static 'styles.css' %}">
+  {% block stylesheets %}{% endblock stylesheets %}
 </head>
 <body>
-  {%include "includes/header.html"%}
-  {% block content %}
-  {% endblock content %}
+
+    {% include "includes/header.html" %}
+
+    {% block content %}{% endblock content %}
+
+    {% include "includes/footer.html" %}
 
 </body>
 </html>
