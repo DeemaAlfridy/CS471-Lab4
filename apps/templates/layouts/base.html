@@ -10,6 +10,7 @@
   <meta charset="UTF-8">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="{% static 'styles.css' %}">
+<<<<<<< HEAD
   {% block stylesheets %}{% endblock stylesheets %}
 </head>
 <body>
@@ -19,6 +20,15 @@
     {% block content %}{% endblock content %}
 
     {% include "includes/footer.html" %}
+=======
+
+  {% block stylesheets %}{% endblock %}   <!-- 🔥 ADD THIS -->
+</head>
+<body>
+  {% include "includes/header.html"%}
+  {% block content %}
+  {% endblock content %}
+>>>>>>> c37c454da242d33da54bd8f67ef0726406c24b59
 
 </body>
 </html>

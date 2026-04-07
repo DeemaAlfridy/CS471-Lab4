@@ -22,6 +22,7 @@ def listing(request):
     return render(request, "bookmodule/listing.html")
 
 def tables(request):
+<<<<<<< HEAD
     return render(request, "bookmodule/tables.html")
 
 def __getBooksList():
@@ -52,3 +53,6 @@ def search_view(request):
         return render(request, 'bookmodule/bookList.html', {'books': newBooks})
 
     return render(request, 'bookmodule/search.html')
+=======
+    return render(request, "bookmodule/tables.html")
+>>>>>>> c37c454da242d33da54bd8f67ef0726406c24b59
