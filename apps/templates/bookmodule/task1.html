@@ -1,0 +1,7 @@
+<h1>Books with price ≤ 80</h1>
+
+<ul>
+  {% for book in books %}
+    <li>{{ book.title }} - {{ book.price }}</li>
+  {% endfor %}
+</ul>
