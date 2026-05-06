@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from .models import BookLab, Publisher
+from django.db.models import Sum, F, FloatField, ExpressionWrapper, Min, Max, Avg, Count, Q
 
 def index(request):
     return render(request, "bookmodule/index.html")
@@ -111,3 +113,59 @@ from .models import Student
 def task7(request):
     data = Student.objects.values('address__city').annotate(count=Count('id'))
     return render(request, 'bookmodule/task7.html', {'data': data})
+
+def lab9_task1(request):
+    total = BookLab.objects.aggregate(total=Sum('quantity'))['total'] or 1
+
+    books = BookLab.objects.annotate(
+        percentage=ExpressionWrapper(
+            (F('quantity') * 100.0) / total,
+            output_field=FloatField()
+        )
+    )
+
+    return render(request, 'bookmodule/lab9_task1.html', {'books': books})
+
+def lab9_task2(request):
+    publishers = Publisher.objects.annotate(
+        total_books=Sum('booklab__quantity')
+    )
+
+    return render(request, 'bookmodule/lab9_task2.html', {'publishers': publishers})
+def lab9_task3(request):
+    publishers = Publisher.objects.annotate(
+        oldest_book=Min('booklab__pubdate')
+    )
+
+    return render(request, 'bookmodule/lab9_task3.html', {'publishers': publishers})
+
+def lab9_task4(request):
+    publishers = Publisher.objects.annotate(
+        avg_price=Avg('booklab__price'),
+        min_price=Min('booklab__price'),
+        max_price=Max('booklab__price')
+    )
+
+    return render(request, 'bookmodule/lab9_task4.html', {'publishers': publishers})
+def lab9_task5(request):
+    publishers = Publisher.objects.annotate(
+        high_rated_books=Count(
+            'booklab',
+            filter=Q(booklab__rating__gte=4)
+        )
+    )
+
+    return render(request, 'bookmodule/lab9_task5.html', {'publishers': publishers})
+def lab9_task6(request):
+    publishers = Publisher.objects.annotate(
+        filtered_books=Count(
+            'booklab',
+            filter=Q(
+                booklab__price__gt=50,
+                booklab__quantity__gte=1,
+                booklab__quantity__lt=5
+            )
+        )
+    )
+
+    return render(request, 'bookmodule/lab9_task6.html', {'publishers': publishers})

@@ -1,0 +1,10 @@
+<h2>Lab 9 - Task 4</h2>
+
+{% for p in publishers %}
+<p>
+    {{ p.name }} |
+    Avg: {{ p.avg_price }} |
+    Min: {{ p.min_price }} |
+    Max: {{ p.max_price }}
+</p>
+{% endfor %}
