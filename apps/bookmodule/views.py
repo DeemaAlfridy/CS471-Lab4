@@ -1,6 +1,7 @@
-from django.shortcuts import render
-from .models import BookLab, Publisher
+from django.shortcuts import render, redirect
+from .models import BookLab, Publisher, Book
 from django.db.models import Sum, F, FloatField, ExpressionWrapper, Min, Max, Avg, Count, Q
+from .forms import BookForm
 
 def index(request):
     return render(request, "bookmodule/index.html")
@@ -169,3 +170,59 @@ def lab9_task6(request):
     )
 
     return render(request, 'bookmodule/lab9_task6.html', {'publishers': publishers})
+def list_books_lab10(request):
+    books = Book.objects.all()
+    return render(request, 'bookmodule/lab10_list.html', {'books': books})
+def add_book_lab10(request):
+
+    if request.method == 'POST':
+
+        title = request.POST['title']
+        author = request.POST['author']
+
+        Book.objects.create(
+            title=title,
+            author=author
+        )
+
+    return render(request, 'bookmodule/lab10_addbook.html')
+def edit_book_lab10(request, id):
+
+    book = Book.objects.get(id=id)
+
+    if request.method == 'POST':
+
+        book.title = request.POST['title']
+        book.author = request.POST['author']
+
+        book.save()
+
+    return render(request,
+                  'bookmodule/lab10_editbook.html',
+                  {'book': book})
+def delete_book_lab10(request, id):
+
+    book = Book.objects.get(id=id)
+
+    book.delete()
+
+    return redirect('/books/lab10_part1/listbooks')
+def add_book_form(request):
+
+    if request.method == 'POST':
+
+        form = BookForm(request.POST)
+
+        if form.is_valid():
+
+            form.save()
+
+            return redirect('/books/lab10_part1/listbooks')
+
+    else:
+
+        form = BookForm()
+
+    return render(request,
+                  'bookmodule/book_form.html',
+                  {'form': form})
