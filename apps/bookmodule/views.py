@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
-from .models import BookLab, Publisher, Book
+from .models import BookLab, Publisher, Book, Student, Student2, Address
 from django.db.models import Sum, F, FloatField, ExpressionWrapper, Min, Max, Avg, Count, Q
-from .forms import BookForm
+from .forms import BookForm, StudentForm, Student2Form, ProductImageForm
 
 def index(request):
     return render(request, "bookmodule/index.html")
@@ -225,4 +225,118 @@ def add_book_form(request):
 
     return render(request,
                   'bookmodule/book_form.html',
+                  {'form': form})
+
+def lab11_students(request):
+
+    students = Student.objects.all()
+
+    return render(
+        request,
+        'bookmodule/lab11_students.html',
+        {'students': students}
+    )
+
+def lab11_add_student(request):
+
+    if request.method == 'POST':
+
+        form = StudentForm(request.POST)
+
+        if form.is_valid():
+
+            form.save()
+
+            return redirect('/books/lab11/students/')
+
+    else:
+
+        form = StudentForm()
+
+    return render(
+        request,
+        'bookmodule/lab11_add_student.html',
+        {'form': form}
+    )
+
+def lab11_edit_student(request, id):
+
+    student = Student.objects.get(id=id)
+
+    if request.method == 'POST':
+
+        form = StudentForm(request.POST, instance=student)
+
+        if form.is_valid():
+
+            form.save()
+
+            return redirect('/books/lab11/students/')
+
+    else:
+
+        form = StudentForm(instance=student)
+
+    return render(
+        request,
+        'bookmodule/lab11_add_student.html',
+        {'form': form}
+    )
+
+
+def lab11_delete_student(request, id):
+
+    student = Student.objects.get(id=id)
+
+    student.delete()
+
+    return redirect('/books/lab11/students/')
+
+def lab11_task2_students(request):
+
+    students = Student2.objects.all()
+
+    return render(
+        request,
+        'bookmodule/lab11_task2_students.html',
+        {'students': students}
+    )
+
+
+def lab11_task2_addstudent(request):
+
+    if request.method == 'POST':
+
+        form = Student2Form(request.POST)
+
+        if form.is_valid():
+
+            form.save()
+
+            return redirect('/books/lab11/task2/students/')
+
+    else:
+
+        form = Student2Form()
+
+    return render(
+        request,
+        'bookmodule/lab11_task2_addstudent.html',
+        {'form': form}
+    )
+
+def lab11_task3_add_image(request):
+
+    if request.method == 'POST':
+
+        form = ProductImageForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            form.save()
+
+    else:
+        form = ProductImageForm()
+
+    return render(request,
+                  'bookmodule/lab11_add_image.html',
                   {'form': form})

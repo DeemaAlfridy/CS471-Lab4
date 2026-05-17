@@ -32,5 +32,12 @@ urlpatterns = [
     path('lab10_part1/editbook/<int:id>', views.edit_book_lab10),
     path('lab10_part1/deletebook/<int:id>', views.delete_book_lab10),
     path('lab10_part2/addbook', views.add_book_form),
+    path('lab11/students/', views.lab11_students, name='lab11.students'),
+    path('lab11/addstudent/', views.lab11_add_student, name='lab11.addstudent'),
+    path('lab11/editstudent/<int:id>/', views.lab11_edit_student, name='lab11.editstudent'),
+    path('lab11/deletestudent/<int:id>/', views.lab11_delete_student, name='lab11.deletestudent'),
+    path('lab11/task2/students/', views.lab11_task2_students, name='lab11.task2.students'),
+    path('lab11/task2/addstudent/', views.lab11_task2_addstudent, name='lab11.task2.addstudent'),
+    path('lab11/task3/addimage/', views.lab11_task3_add_image, name='lab11.task3.addimage'),
     ]
 

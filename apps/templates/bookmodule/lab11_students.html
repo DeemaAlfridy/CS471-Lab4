@@ -1,0 +1,30 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+
+<h1>Students List</h1>
+
+<a href="{% url 'lab11.addstudent' %}">Add Student</a>
+<hr>
+
+{% for student in students %}
+
+    <h3>{{ student.name }}</h3>
+
+    <p>Age: {{ student.age }}</p>
+
+    <p>City: {{ student.address.city }}</p>
+
+    <a href="{% url 'lab11.editstudent' student.id %}">
+    Edit
+    </a>
+
+    <a href="{% url 'lab11.deletestudent' student.id %}">
+    Delete
+    </a>
+
+    <hr>
+
+{% endfor %}
+
+{% endblock %}
