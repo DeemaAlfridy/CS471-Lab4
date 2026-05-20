@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect
 from .models import BookLab, Publisher, Book, Student, Student2, Address
 from django.db.models import Sum, F, FloatField, ExpressionWrapper, Min, Max, Avg, Count, Q
-from .forms import BookForm, StudentForm, Student2Form, ProductImageForm
+from .forms import BookForm, StudentForm, Student2Form, ProductImageForm, RegisterForm, LoginForm
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 def index(request):
     return render(request, "bookmodule/index.html")
@@ -227,6 +230,7 @@ def add_book_form(request):
                   'bookmodule/book_form.html',
                   {'form': form})
 
+@login_required
 def lab11_students(request):
 
     students = Student.objects.all()
@@ -237,6 +241,7 @@ def lab11_students(request):
         {'students': students}
     )
 
+@login_required
 def lab11_add_student(request):
 
     if request.method == 'POST':
@@ -259,6 +264,7 @@ def lab11_add_student(request):
         {'form': form}
     )
 
+@login_required
 def lab11_edit_student(request, id):
 
     student = Student.objects.get(id=id)
@@ -283,7 +289,7 @@ def lab11_edit_student(request, id):
         {'form': form}
     )
 
-
+@login_required
 def lab11_delete_student(request, id):
 
     student = Student.objects.get(id=id)
@@ -292,6 +298,7 @@ def lab11_delete_student(request, id):
 
     return redirect('/books/lab11/students/')
 
+@login_required
 def lab11_task2_students(request):
 
     students = Student2.objects.all()
@@ -302,7 +309,7 @@ def lab11_task2_students(request):
         {'students': students}
     )
 
-
+@login_required
 def lab11_task2_addstudent(request):
 
     if request.method == 'POST':
@@ -325,6 +332,7 @@ def lab11_task2_addstudent(request):
         {'form': form}
     )
 
+@login_required
 def lab11_task3_add_image(request):
 
     if request.method == 'POST':
@@ -340,3 +348,55 @@ def lab11_task3_add_image(request):
     return render(request,
                   'bookmodule/lab11_add_image.html',
                   {'form': form})
+
+def register(request):
+
+    if request.method == 'POST':
+
+        form = RegisterForm(request.POST)
+
+        if form.is_valid():
+
+            user = form.save(commit=False)
+
+            user.set_password(form.cleaned_data['password'])
+
+            user.save()
+            messages.success(request, "Registered successfully")
+
+            login(request, user)
+
+            return redirect('/books/')
+
+    else:
+
+        form = RegisterForm()
+
+    return render(request, 'bookmodule/register.html', {'form': form})
+
+def login_user(request):
+
+    if request.method == 'POST':
+
+        form = LoginForm(request, data=request.POST)
+
+        if form.is_valid():
+
+            user = form.get_user()
+
+            login(request, user)
+            messages.success(request, "Login successful")
+
+            return redirect('/books/')
+
+    else:
+
+        form = LoginForm()
+
+    return render(request, 'bookmodule/login.html', {'form': form})
+
+def logout_user(request):
+
+    logout(request)
+    messages.success(request, "Logout successful")
+    return redirect('/books/lab12/task2/users/login/')

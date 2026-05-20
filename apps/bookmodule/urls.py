@@ -39,5 +39,8 @@ urlpatterns = [
     path('lab11/task2/students/', views.lab11_task2_students, name='lab11.task2.students'),
     path('lab11/task2/addstudent/', views.lab11_task2_addstudent, name='lab11.task2.addstudent'),
     path('lab11/task3/addimage/', views.lab11_task3_add_image, name='lab11.task3.addimage'),
+    path('lab12/task1/users/register/', views.register, name='register'),
+    path('lab12/task2/users/login/', views.login_user, name='login'),
+    path('lab12/task4/users/logout/', views.logout_user, name='logout'),
     ]
 
